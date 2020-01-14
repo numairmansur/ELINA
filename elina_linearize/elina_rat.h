@@ -43,7 +43,7 @@
 #endif
 
 #include "elina_int.h"
-namespace std
+
 
 #ifdef __cplusplus
 extern "C" {
