@@ -51,7 +51,7 @@ typedef long long int elina_int_t;
 #define ELINA_INT_ONE 1LL
 #define ELINA_INT_MAX LLONG_MAX
 #define ELINA_INT_MIN LLONG_MIN
-using namespace std;
+namespace std
 
 static inline int elina_int_sgn(elina_int_t a)
 { return (a==ELINA_INT_ZERO ? 0 : (a>ELINA_INT_ZERO ? 1 : -1)); }
