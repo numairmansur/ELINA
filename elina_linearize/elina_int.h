@@ -161,7 +161,7 @@ static inline bool int_set_double(long int* a, double b)
 {
   double c;
   c = ceil(b);
-  if (!isfinite(c)) { *a = 0; return false; }
+  if (!std::isfinite(c)) { *a = 0; return false; }
   *a = (long int)c;
   return (b==c);
 }
