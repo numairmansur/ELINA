@@ -44,6 +44,11 @@
 
 #include "elina_int.h"
 
+# if __GNUC_PREREQ (4,4) && !defined __SUPPORT_SNAN__
+#  define isfinite(x) __builtin_isfinite (x)
+# else
+#  define isfinite(x) __MATH_TG ((x), __finite, (x))
+# endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,7 +85,7 @@ static inline bool elina_rat_set_mpq(elina_rat_t* a, mpq_t b)
 /* double -> elina_rat */
 static inline bool elina_rat_set_double_tmp(elina_rat_t* a, double k, mpq_t mpq)
 {
-  if (!std::isfinite(k)) {elina_rat_set_int(a,0); return false; }
+  if (!isfinite(k)) {elina_rat_set_int(a,0); return false; }
   mpq_set_d(mpq,k);
   elina_rat_set_mpq(a,mpq);
   return true;
