@@ -51,6 +51,12 @@ typedef long long int elina_int_t;
 #define ELINA_INT_ONE 1LL
 #define ELINA_INT_MAX LLONG_MAX
 #define ELINA_INT_MIN LLONG_MIN
+	
+# if __GNUC_PREREQ (4,4) && !defined __SUPPORT_SNAN__
+#  define isfinite(x) __builtin_isfinite (x)
+# else
+#  define isfinite(x) __MATH_TG ((x), __finite, (x))
+# endif
 
 static inline int elina_int_sgn(elina_int_t a)
 { return (a==ELINA_INT_ZERO ? 0 : (a>ELINA_INT_ZERO ? 1 : -1)); }
@@ -160,7 +166,7 @@ static inline bool int_set_double(long int* a, double b)
 {
   double c;
   c = ceil(b);
-  if (!std::isfinite(c)) { *a = 0; return false; }
+  if (!isfinite(c)) { *a = 0; return false; }
   *a = (long int)c;
   return (b==c);
 }
